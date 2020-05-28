@@ -8,6 +8,7 @@ package modelo;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,7 +26,7 @@ public class Persona {
     public Persona() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            cnn = DriverManager.getConnection("jdbc:mysql://localhost:3307/bd_recurso_humano?zeroDateTimeBehavior=convertToNul", "root", "");
+            cnn = DriverManager.getConnection("jdbc:mysql://localhost:3307/bd_recurso_humano?zeroDateTimeBehavior=convertToNull", "root", "");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
             
@@ -33,10 +34,18 @@ public class Persona {
             Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public Persona(String dui, String apellidos, String nombres) {
+        this.dui = dui;
+        this.apellidos = apellidos;
+        this.nombres = nombres;
+    }
+    
+    
     
     public boolean insertarDatos(){
         try{
-            String miQuery = "insert into tb_persona values ('" + dui + "', '" + apellidos 
+            String miQuery = "INSERT INTO tb_persona VALUES('" + dui + "', '" + apellidos 
                     + "','" + nombres + "');";
             int estado = 0;
             state = cnn.createStatement();
@@ -48,6 +57,16 @@ public class Persona {
             Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+    
+    public void consultarRegistros(){
+        ArrayList<Persona> person = new ArrayList();
+        try{
+            String miQuery = "SELECT * FROM tb_persona;";
+            
+        }catch(SQLException ex){
+            Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getDui() {
