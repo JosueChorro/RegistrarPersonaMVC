@@ -7,16 +7,18 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modelo.Persona;
+
 /**
  *
  * @author JCH
  */
-public class Recibir extends HttpServlet {
+public class Mostrar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,19 +31,12 @@ public class Recibir extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Recibir</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Recibir at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
+        Persona p = new Persona();
+         ArrayList<Persona> personas = new ArrayList();
+        personas = p.consultarRegistros();
+        request.getSession().setAttribute("personas", personas);
+        request.getRequestDispatcher("mostrartodo.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,25 +63,11 @@ public class Recibir extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws  ServletException, IOException{
-        
-        String dui = request.getParameter("txtDui");
-        String apellido = request.getParameter("txtApellidos");
-        String nombre = request.getParameter("txtNombre");
-        
-        Persona persona = new Persona();
-        
-        persona.setDui(dui);
-        persona.setApellidos(apellido);
-        persona.setNombres(nombre);
-        
-        if(persona.insertarDatos() == true){
-            request.getRequestDispatcher("exito.jsp").forward(request, response);
-        }else{
-            request.getRequestDispatcher("noexito.jsp").forward(request, response);
-        }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
+
     /**
      * Returns a short description of the servlet.
      *
