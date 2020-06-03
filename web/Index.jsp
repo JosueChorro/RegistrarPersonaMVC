@@ -20,6 +20,8 @@
             Nombre:    <input type="text" name="txtNombre" value="" /><br>
             <input type="submit" value="Registrar Nueva Persona" />
         </form>
+        <br><br>
+        <a href="/RegistrarPersonaMVC/mostrartodo.jsp">Regrear</a>
         
         
     </body>

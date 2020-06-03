@@ -60,13 +60,17 @@ public class Persona {
     }
     
     public ArrayList<Persona> consultarRegistros(){
-        ArrayList<Persona> person = new ArrayList();
+        ArrayList<Persona> person = new ArrayList<>();
         try{
             String miQuery = "SELECT * FROM tb_persona;";
             state = cnn.createStatement();
             result = state.executeQuery(miQuery);
             while(result.next()){
-                person.add(new Persona(result.getString("dui_persona"), result.getString("apellidos_persona"), result.getString("nombre_persona")));
+                 Persona per = new Persona();
+                per.setDui(result.getString("dui_persona"));
+                per.setApellidos(result.getString("apellidos_persona"));
+                per.setNombres(result.getString("nombre_persona"));
+                person.add(per);
             }
         }catch(SQLException ex){
             Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);

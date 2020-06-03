@@ -33,7 +33,7 @@ public class Mostrar extends HttpServlet {
             throws ServletException, IOException {
         
         Persona p = new Persona();
-         ArrayList<Persona> personas = new ArrayList();
+         ArrayList<Persona> personas = new ArrayList<>();
         personas = p.consultarRegistros();
         request.getSession().setAttribute("personas", personas);
         request.getRequestDispatcher("mostrartodo.jsp").forward(request, response);
